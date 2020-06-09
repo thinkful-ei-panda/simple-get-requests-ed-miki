@@ -1,49 +1,58 @@
-// function fetchImage(num) {
+// function fetchDogImg(num) {
 //   for (let i = 0; i < num; i++) {
 //     fetch('https://dog.ceo/api/breeds/image/random')
 //       .then(response => response.json())
 //       .then(responseJson =>
-//         displayImg(responseJson, num)
+//         displayDogImg(responseJson, num)
 //       );
 //   }
 //   $('section').removeClass('hidden');
 // }
 
-// function displayImg(responseJson) {
+// function displayDogImg(responseJson) {
 //   console.log(responseJson);
-//   $('.results').append(`<img src="${responseJson.message}" class="results-img" alt="placeholder">`);
+//   $('.results').append(`<img src="${responseJson.message}" class="results-img" alt="">`);
 // }
 
-// function startPage() {
+// function starterDogApp() {
 //   $('form').submit(event => {
 //     event.preventDefault();
 
+        // Retrieve user input
 //     const num = $('input').val();
 
+        // Set default to 3
 //     $('input').val('3');
 
 //     fetchImage(num);
 //   });
 // }
 
-// $(startPage);
+// $(starterDogApp);
 
-function fetchImage(breed) {
-  let randomUrl = `https://dog.ceo/api/breed/${breed}/images/random`;
+function fetchDogImage(breed) {
+  let url = `https://dog.ceo/api/breed/${breed}/images/random`;
 
-  fetch(randomUrl)
-    .then(response => response.json())
+  fetch(url)
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+          throw new Error(response.status);  
+        }
+    })
     .then(responseJson =>
-      displayImg(responseJson, breed)
-    );
+      displayDogImg(responseJson, breed)
+    )
+    .catch(error => alert('Somthing went wrong. Try again later.'))
 }
 
-function displayImg(responseJson, breed) {
+function displayDogImg(responseJson, breed) {
   $('.results').append(`<img src="${responseJson.message}" class="results-img" alt="${breed}">`);
   $('section').removeClass('hidden');
 }
 
-function startPage() {
+function starterDogApp() {
   $('form').submit(event => {
     event.preventDefault();
 
@@ -51,11 +60,11 @@ function startPage() {
 
     $('input').val('');
 
-    fetchImage(breed);
+    fetchDogImage(breed);
   });
 }
 
-$(startPage);
+$(starterDogApp);
 
 
 
